@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "99089903117",
+    "project_id": "tattoo-zona-project",
+    "storage_bucket": "tattoo-zona-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99089903117:android:87b7b8657cf1e13d7fef44",
+        "android_client_info": {
+          "package_name": "com.example.tattoo_zona"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeVgwD3e35bHectIiUy6LcHaas4-czWKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
