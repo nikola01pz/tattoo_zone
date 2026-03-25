@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tattoo_zona/pages/login_page.dart';
-import 'package:tattoo_zona/pages/register_page.dart';
+import 'package:tattoo_zona/features/auth/pages/login_page.dart';
+import 'package:tattoo_zona/features/auth/pages/register_page.dart';
 
 class LoginOrRegisterPage extends StatefulWidget {
   const LoginOrRegisterPage({super.key});

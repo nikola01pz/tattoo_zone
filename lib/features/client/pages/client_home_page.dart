@@ -1,5 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tattoo_zona/features/auth/bloc/auth_bloc.dart';
+import 'package:tattoo_zona/features/auth/bloc/auth_event.dart';
 
 class ClientHomePage extends StatelessWidget {
   const ClientHomePage({super.key});
@@ -10,7 +12,7 @@ class ClientHomePage extends StatelessWidget {
       appBar: AppBar(title: const Text('Client'), actions: [
         IconButton(
           icon: const Icon(Icons.logout),
-          onPressed: () => FirebaseAuth.instance.signOut(),
+          onPressed: () => context.read<AuthBloc>().add(LogoutRequested()),
         )
       ]),
       body: const Center(child: Text('Client homepage')),

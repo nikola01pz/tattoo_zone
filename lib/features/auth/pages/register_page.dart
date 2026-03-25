@@ -1,8 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tattoo_zona/components/my_button.dart';
 import 'package:tattoo_zona/components/my_textfield.dart';
+import 'package:tattoo_zona/features/auth/bloc/auth_bloc.dart';
+import 'package:tattoo_zona/features/auth/bloc/auth_event.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
@@ -17,34 +18,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   String? selectedUserType;
-
-  Future<void> signUserUp() async {
-    if (selectedUserType == null) {
-      showErrorMessage("Please select account type.");
-      return;
-    }
-
-    try {
-      if (passwordController.text == confirmPasswordController.text) {
-        UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim(),
-        );
-
-        await FirebaseFirestore.instance
-            .collection("users")
-            .doc(userCredential.user!.uid)
-            .set({
-          "email": emailController.text.trim(),
-          "userType": selectedUserType!,
-        });
-      } else {
-        showErrorMessage("Password don't match.");
-      }
-    } on FirebaseAuthException catch (e) {
-      showErrorMessage(e.message ?? "An error occurred.");
-    }
-  }
 
 void showErrorMessage(String message) {
   showDialog(
@@ -86,12 +59,12 @@ void showErrorMessage(String message) {
               children: [
                 const SizedBox(height: 50),
 
-                Image.asset("lib/images/tattoo_zone_logo.png", width: 256),
+                Image.asset('lib/images/tattoo_zone_logo.png', width: 256),
 
                 const SizedBox(height: 10),
 
                 Text(
-                  "Let's create an account for you!",
+                  'Let\'s create an account for you!',
                   style: TextStyle(
                     color: Colors.grey[700],
                     fontSize: 16,
@@ -102,7 +75,7 @@ void showErrorMessage(String message) {
 
                 MyTextField(
                   controller: emailController,
-                  hintText: "Email",
+                  hintText: 'Email',
                   obscureText: false,
                 ),
 
@@ -110,7 +83,7 @@ void showErrorMessage(String message) {
 
                 MyTextField(
                   controller: passwordController,
-                  hintText: "Password",
+                  hintText: 'Password',
                   obscureText: true,
                 ),
 
@@ -118,7 +91,7 @@ void showErrorMessage(String message) {
 
                 MyTextField(
                   controller: confirmPasswordController,
-                  hintText: "Confirm Password",
+                  hintText: 'Confirm Password',
                   obscureText: true,
                 ),
 
@@ -137,7 +110,7 @@ void showErrorMessage(String message) {
                       ),
                       fillColor: Colors.grey.shade200,
                       filled: true,
-                      hintText: "Account type",
+                      hintText: 'Account type',
                       contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                     ),
                     dropdownColor: Colors.grey.shade200,
@@ -163,20 +136,34 @@ void showErrorMessage(String message) {
                 const SizedBox(height: 30),
 
                 MyButton(
-                  text: "Sign up",
-                  onTap: signUserUp,
+                  text: 'Sign up',
+                  onTap: () {
+                    if (passwordController.text != confirmPasswordController.text) {
+                      showErrorMessage('Passwords don\'t match.');
+                      return;
+                    }
+                    if (selectedUserType == null) {
+                      showErrorMessage('Please select account type.');
+                      return;
+                    }
+                    context.read<AuthBloc>().add(RegisterRequested(
+                      email: emailController.text.trim(),
+                      password: passwordController.text.trim(),
+                      userType: selectedUserType!,
+                    ));
+                  },
                 ),
                 
                 const SizedBox(height: 25),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Already have an account?"),
+                    const Text('Already have an account?'),
                     const SizedBox(width: 10),
                     GestureDetector(
                       onTap: widget.onTap,
                       child: const Text(
-                        "Login now",
+                        'Login now',
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
