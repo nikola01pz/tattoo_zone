@@ -24,6 +24,13 @@ class MyApp extends StatelessWidget {
       )..add(AuthCheckRequested()),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.grey[300],
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.grey[300],
+            elevation: 0,
+          ),
+        ),
         home: const AuthPage(),
       ),
     );

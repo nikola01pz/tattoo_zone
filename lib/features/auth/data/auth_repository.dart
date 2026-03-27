@@ -28,6 +28,29 @@ class AuthRepository {
       'email': email,
       'userType': userType,
     });
+
+    if (userType == 'artist') {
+    await _firestore.collection('artists').doc(credential.user!.uid).set({
+      'displayName': '',        
+      'bio': '',
+      'styles': [],
+      'location': null,
+      'locationName': '',
+      'profileImageUrl': '',
+      'rating': 0.0,
+      'reviewCount': 0,
+      });
+    }
+
+    if (userType == 'client') {
+      await _firestore.collection('clients').doc(credential.user!.uid).set({
+        'displayName': '',
+        'profileImageUrl': '',
+        'locationName': '',
+        'bio': '',
+        'currentTattoos': [],
+      });
+    }
   }
 
   Future<String> getUserType(String uid) async {
