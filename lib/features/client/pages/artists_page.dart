@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../bloc/client_bloc.dart';
-import '../bloc/client_state.dart';
-import '../data/models/artist_model.dart';
+import 'package:tattoo_zona/features/client/bloc/client_bloc.dart';
+import 'package:tattoo_zona/features/client/bloc/client_state.dart';
+import 'package:tattoo_zona/features/client/pages/artist_profile_preview_page.dart';
+import 'package:tattoo_zona/features/shared/models/artist_model.dart';
 
 class ArtistsPage extends StatelessWidget {
   const ArtistsPage({super.key});
@@ -15,6 +16,7 @@ class ArtistsPage extends StatelessWidget {
         if (state is ClientLoading) {
           return const Center(child: CircularProgressIndicator());
         }
+
         if (state is ClientLoaded) {
           return Column(
             children: [
@@ -29,6 +31,7 @@ class ArtistsPage extends StatelessWidget {
             ],
           );
         }
+
         return const Center(child: Text('No artists found.'));
       },
     );
@@ -37,9 +40,22 @@ class ArtistsPage extends StatelessWidget {
 
 class _ArtistsMap extends StatelessWidget {
   final List<ArtistModel> artists;
+
   const _ArtistsMap({required this.artists});
 
-  Set<Marker> _buildMarkers() {
+  void _openArtistProfile(BuildContext context, ArtistModel artist) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => BlocProvider.value(
+          value: context.read<ClientBloc>(),
+          child: ArtistProfilePreviewPage(artist: artist),
+        ),
+      ),
+    );
+  }
+
+  Set<Marker> _buildMarkers(BuildContext context) {
     return artists.map((artist) {
       return Marker(
         markerId: MarkerId(artist.id),
@@ -47,6 +63,7 @@ class _ArtistsMap extends StatelessWidget {
         infoWindow: InfoWindow(
           title: artist.displayName,
           snippet: artist.styles.join(', '),
+          onTap: () => _openArtistProfile(context, artist),
         ),
       );
     }).toSet();
@@ -59,13 +76,14 @@ class _ArtistsMap extends StatelessWidget {
         target: LatLng(45.5511, 18.6939),
         zoom: 12,
       ),
-      markers: _buildMarkers(),
+      markers: _buildMarkers(context),
     );
   }
 }
 
 class _ArtistsList extends StatelessWidget {
   final List<ArtistModel> artists;
+
   const _ArtistsList({required this.artists});
 
   @override
@@ -73,6 +91,7 @@ class _ArtistsList extends StatelessWidget {
     if (artists.isEmpty) {
       return const Center(child: Text('No artists yet.'));
     }
+
     return ListView.builder(
       itemCount: artists.length,
       itemBuilder: (context, index) {
@@ -84,11 +103,25 @@ class _ArtistsList extends StatelessWidget {
 
 class _ArtistCard extends StatelessWidget {
   final ArtistModel artist;
+
   const _ArtistCard({required this.artist});
+
+  void _openArtistProfile(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => BlocProvider.value(
+          value: context.read<ClientBloc>(),
+          child: ArtistProfilePreviewPage(artist: artist),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () => _openArtistProfile(context),
       leading: CircleAvatar(
         backgroundImage: artist.profileImageUrl.isNotEmpty
             ? NetworkImage(artist.profileImageUrl)

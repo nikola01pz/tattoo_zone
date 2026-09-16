@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:tattoo_zona/features/auth/bloc/auth_event.dart';
+import 'package:tattoo_zona/features/artist/bloc/artist_bloc.dart';
+import 'package:tattoo_zona/features/artist/bloc/appointment_bloc.dart';
+import 'package:tattoo_zona/features/shared/data/appointment_repository.dart';
 import 'firebase_options.dart';
 import 'features/auth/bloc/auth_bloc.dart';
 import 'features/auth/data/auth_repository.dart';
@@ -18,10 +21,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => AuthBloc(
-        authRepository: AuthRepository(),
-      )..add(AuthCheckRequested()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => AuthBloc(
+            authRepository: AuthRepository(),
+          )..add(AuthCheckRequested()),
+        ),
+        BlocProvider(
+          create: (_) => ArtistBloc(),
+        ),
+        BlocProvider(
+          create: (_) => AppointmentBloc(
+            repository: AppointmentRepository(),
+          ),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

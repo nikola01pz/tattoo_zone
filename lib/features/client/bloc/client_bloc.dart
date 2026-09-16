@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tattoo_zona/features/client/data/models/client_model.dart';
-import '../data/client_repository.dart';
-import '../data/models/artist_model.dart';
-import '../data/models/tattoo_model.dart';
+import 'package:tattoo_zona/features/shared/models/client_model.dart';
+import 'package:tattoo_zona/features/client/data/client_repository.dart';
+import 'package:tattoo_zona/features/shared/models/artist_model.dart';
+import 'package:tattoo_zona/features/shared/models/tattoo_model.dart';
 import 'client_event.dart';
 import 'client_state.dart';
 

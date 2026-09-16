@@ -5,9 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../bloc/client_bloc.dart';
 import '../bloc/client_event.dart';
 import '../bloc/client_state.dart';
-import '../data/models/client_model.dart';
+import '../../shared/models/client_model.dart';
 import '../data/client_repository.dart';
-import '../data/storage_service.dart';
+import '../../shared/services/storage_service.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});

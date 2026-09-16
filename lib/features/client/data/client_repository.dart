@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'models/tattoo_model.dart';
-import 'models/artist_model.dart';
-import 'models/client_model.dart';
+import 'package:tattoo_zona/features/shared/models/tattoo_model.dart';
+import 'package:tattoo_zona/features/shared/models/artist_model.dart';
+import 'package:tattoo_zona/features/shared/models/client_model.dart';
 
 class ClientRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

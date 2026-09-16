@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/client_bloc.dart';
 import '../bloc/client_state.dart';
-import '../data/models/tattoo_model.dart';
+import '../../shared/models/tattoo_model.dart';
 
 class FeedPage extends StatelessWidget {
   const FeedPage({super.key});

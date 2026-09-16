@@ -37,6 +37,7 @@ class AuthRepository {
       'location': null,
       'locationName': '',
       'profileImageUrl': '',
+      'portfolioImages': [],
       'rating': 0.0,
       'reviewCount': 0,
       });

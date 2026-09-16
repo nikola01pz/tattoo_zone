@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import '../data/models/tattoo_model.dart';
-import '../data/models/artist_model.dart';
-import '../data/models/client_model.dart';
+import 'package:tattoo_zona/features/shared/models/tattoo_model.dart';
+import 'package:tattoo_zona/features/shared/models/artist_model.dart';
+import 'package:tattoo_zona/features/shared/models/client_model.dart';
 
 abstract class ClientState extends Equatable {
   final int currentTab;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../bloc/client_bloc.dart';
-import '../bloc/client_event.dart';
-import '../bloc/client_state.dart';
+import 'package:tattoo_zona/features/client/bloc/client_bloc.dart';
+import 'package:tattoo_zona/features/client/bloc/client_event.dart';
+import 'package:tattoo_zona/features/client/bloc/client_state.dart';
 import 'feed_page.dart';
 import 'artists_page.dart';
 import 'messages_page.dart';
@@ -41,6 +41,8 @@ class ClientHomePage extends StatelessWidget {
               onTap: (index) =>
                   context.read<ClientBloc>().add(ClientTabChanged(index)),
               type: BottomNavigationBarType.fixed,
+              backgroundColor: Colors.grey[350],
+              selectedItemColor: Colors.black,
               items: const [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
